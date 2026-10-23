@@ -1,0 +1,34 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: transaction-monitor
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/aml_db
+    username: aml_user
+    password: aml_password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+aml:
+  rabbitmq:
+    exchange: aml.transaction.exchange
+    queue: aml.transaction.queue
+    routingkey: aml.transaction.routingkey

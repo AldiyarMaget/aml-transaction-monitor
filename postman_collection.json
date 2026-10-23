@@ -1,0 +1,197 @@
+{
+  "info": {
+    "name": "AML Transaction Monitor API",
+    "description": "Production-ready test suite for AML Transaction Monitor service: Green corridor, Fraud detection, and Validation failure scenarios.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Create Transaction - Green Corridor (APPROVED)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if (jsonData.id) {",
+              "    pm.collectionVariables.set('approvedTxId', jsonData.id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"accountFrom\": \"KZ1234567890123456\",\n  \"accountTo\": \"KZ9876543210987654\",\n  \"amount\": 150000.00,\n  \"currency\": \"KZT\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/transactions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "transactions"
+          ]
+        }
+      }
+    },
+    {
+      "name": "1.1 Check Status - Green Corridor",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/transactions/{{approvedTxId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "transactions",
+            "{{approvedTxId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "2. Create Transaction - High Risk (SUSPICIOUS)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if (jsonData.id) {",
+              "    pm.collectionVariables.set('suspiciousTxId', jsonData.id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"accountFrom\": \"KZ1234567890123456\",\n  \"accountTo\": \"KZ9876543210987654\",\n  \"amount\": 7500000.00,\n  \"currency\": \"KZT\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/transactions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "transactions"
+          ]
+        }
+      }
+    },
+    {
+      "name": "2.1 Check Status - Suspicious",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/transactions/{{suspiciousTxId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "transactions",
+            "{{suspiciousTxId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "3. Validation Error (HTTP 400 Bad Request)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"accountFrom\": \"\",\n  \"accountTo\": \"KZ9876543210987654\",\n  \"amount\": -500.00,\n  \"currency\": \"KAZAKHSTAN\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/transactions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "transactions"
+          ]
+        }
+      }
+    },
+    {
+      "name": "4. Transaction Not Found (HTTP 404 Not Found)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/transactions/00000000-0000-0000-0000-000000000000",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "transactions",
+            "00000000-0000-0000-0000-000000000000"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "approvedTxId",
+      "value": ""
+    },
+    {
+      "key": "suspiciousTxId",
+      "value": ""
+    }
+  ]
+}

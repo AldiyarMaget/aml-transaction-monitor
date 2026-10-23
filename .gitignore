@@ -1,0 +1,73 @@
+# Compiled class and build outputs
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Environment files & Secrets (CRITICAL: Never commit credentials)
+.env
+.env.*
+!.env.example
+*.env
+*.pem
+*.key
+*.p12
+*.jks
+credentials.json
+secrets.yml
+secrets.properties
+
+# Local Spring Boot configurations
+*-local.properties
+*-local.yml
+*-local.yaml
+application-local.yml
+application-local.properties
+
+# Logs and Crash Dumps (May contain memory or personal data)
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+hs_err_pid*
+replay_pid*
+
+# IDE: VS Code
+.vscode/
+*.code-workspace
+
+# IDE: IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# IDE: Eclipse / STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# IDE: NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbproject/load-invocation.xml
+/build/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Temporary / Scratch files
+*.tmp
+*.bak
+*.swp
+*~
